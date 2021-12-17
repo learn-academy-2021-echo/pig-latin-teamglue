@@ -29,7 +29,7 @@ class App extends Component {
       console.log("currentWord:", currentWord);
 
       let vowelsArray = currentWord.split("").filter((vowel) => {
-        
+
         return (
           vowel === "a" ||
           vowel === "e" ||
@@ -39,11 +39,50 @@ class App extends Component {
         );
       });
       console.log("vowelsArray:", vowelsArray);
-      // if (currentWord[0] === vowelArray[0]) {
-        // currentWord = currentWord + "way"
-      // if ()
+
+      currentWord.toLowerCase()
+
+      //Vowel First
+       if (currentWord[0] === vowelsArray[0]) {
+        currentWord = currentWord + "way"
+        return currentWord
       }
+
+
+      //QU
+      //using startswith method, check if the currentWord begins with 'qu'
+      // slice the first two characters
+      //add to the end of the word
+      //add 'ay' to the end of currentWord
+
+      if (currentWord.startsWith('qu')) {
+    currentWord = currentWord.slice(2) + 'quay'
+    return currentWord
       }
+    //Y
+      //if vowelsArray.length = 0
+      //
+      if (vowelsArray.length === []) {
+        let firstY = currentWord.indexOf('y')
+        let yIndex = firstY + 1
+        currentWord = currentWord.substring(yIndex) + 'ay'
+        return currentWord
+      }
+
+
+
+
+      //Consonant first
+      if (currentWord[0] !== vowelsArray[0]) {
+        let firstVowelIndex = currentWord.indexOf(vowelsArray[0])
+        currentWord = currentWord.substring(firstVowelIndex - 1) + currentWord.substring(0, firstVowelIndex) + 'ay'
+        return currentWord
+      }
+      // create a variable assigned to the index of first vowel in currentword.
+      // make currentWord = slice from index found to end of word
+      //add vowels using slice and concat
+      //add 'ay' to the end
+
       // your code here!
       // Remember: console.log is your friend :)
 
