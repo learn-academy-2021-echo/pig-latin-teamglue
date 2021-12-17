@@ -38,6 +38,14 @@ class App extends Component {
         );
       });
       console.log("vowelsArray:", vowelsArray);
+      //Create a punctuation variable that contains unwanted characters
+      //Set up a regExp class that will filter out punctuation.
+      //Apply regExp to currentWord variable and replace with empty   string.
+
+      var punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+      var regExp = new RegExp('[' + punctuation + ']', 'g');
+      currentWord = currentWord.replace(regExp, '');
+      //Make all words lower case.
 
       currentWord = currentWord.toLowerCase();
 
@@ -146,7 +154,7 @@ class App extends Component {
           <button onClick={this.restartGame}>Clear</button>
         </div>
         <p>{this.state.phraseTranslated}</p>
-        <footer>Coded by ~your name here~</footer>
+        <footer>Kevin, John and Demetrius~</footer>
       </>
     );
   }
