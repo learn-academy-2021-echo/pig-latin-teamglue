@@ -42,33 +42,26 @@ class App extends Component {
       //Set up a regExp class that will filter out punctuation.
       //Apply regExp to currentWord variable and replace with empty   string.
 
-      var punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
-      var regExp = new RegExp('[' + punctuation + ']', 'g');
-      currentWord = currentWord.replace(regExp, '');
+      var punctuation = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~1234567890";
+      var regExp = new RegExp("[" + punctuation + "]", "g");
+      currentWord = currentWord.replace(regExp, "");
       //Make all words lower case.
 
       currentWord = currentWord.toLowerCase();
 
-      //Vowel First
+      // This will remove any excess spaces
+      if (currentWord === "") {
+        return;
+      }
+
+      // Vowel First
       if (currentWord[0] === vowelsArray[0]) {
         currentWord = currentWord + "way";
         return currentWord;
       }
 
-      //QU
-      //using startswith method, check if the currentWord begins with 'qu'
-      // slice the first two characters
-      //add to the end of the word
-      //add 'ay' to the end of currentWord
-
-      if (currentWord.startsWith("qu")) {
-        currentWord = currentWord.slice(2) + "quay";
-        return currentWord;
-      }
-      //Y
-      //if vowelsArray.length = 0
-      //
-      if (vowelsArray.length === 0) {
+      //If y is the only vowel
+      if (vowelsArray.length === 0 && currentWord.includes("y")) {
         let yIndex = currentWord.indexOf("y");
         currentWord =
           currentWord.slice(yIndex, currentWord.length) +
@@ -77,8 +70,18 @@ class App extends Component {
         return currentWord;
       }
 
-      //Consonant first
-      if (currentWord[0] !== vowelsArray[0]) {
+      // Consonant first, with qu in front of a vowel
+      if (currentWord[0] !== vowelsArray[0] && currentWord.includes("qu")) {
+        let firstVowelIndex = currentWord.indexOf(vowelsArray[0]) + 1;
+        currentWord =
+          currentWord.slice(firstVowelIndex, currentWord.length) +
+          currentWord.slice(0, firstVowelIndex) +
+          "ay";
+        return currentWord;
+      }
+
+      // Consonant first, at least one vowel in word
+      if (currentWord[0] !== vowelsArray[0] && vowelsArray.length !== 0) {
         let firstVowelIndex = currentWord.indexOf(vowelsArray[0]);
         currentWord =
           currentWord.slice(firstVowelIndex, currentWord.length) +
@@ -86,16 +89,11 @@ class App extends Component {
           "ay";
         return currentWord;
       }
-      // create a variable assigned to the index of first vowel in currentword.
-      // make currentWord = slice from index found to end of word
-      //add vowels using slice and concat
-      //add 'ay' to the end
 
-      // your code here!
-      // Remember: console.log is your friend :)
-
-      // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
-      return currentWord;
+      // For words which have no vowels (adding limited ability to catch typos)
+      else {
+        return "Invalid input, please enter a word or words to be turned into pig latin";
+      }
     });
 
     // joining the array back to a string of translated words
